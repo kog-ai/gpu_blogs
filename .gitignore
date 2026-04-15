@@ -5,6 +5,8 @@
 #   Official AMD ROCm HIP .gitignore: https://github.com/ROCm/hip/blob/amd-staging/.gitignore
 
 # 1. Build directories and files
+.vscode/
+build/
 /build/                          # common build directory
 /CMakeFiles/                     # CMake internal files
 /CMakeCache.txt                  # CMake cache file
