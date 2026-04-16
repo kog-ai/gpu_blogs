@@ -1,0 +1,24 @@
+CompileFlags:
+    Compiler: /opt/rocm/lib/llvm/bin/clang++
+    BuiltinHeaders: QueryDriver
+    Add: [
+        "-xhip",
+        "-std=gnu++23",
+
+        "--offload-arch=gfx942",
+        "-D__clang__",
+        "-D__HIP__",
+        "-D__HIP_PLATFORM_AMD__",
+        "-D__HIP_ROCclr__=1",
+
+        "-Iinclude",
+        "-I/opt/rocm/include",
+        "-I/opt/rocm/hip/include",
+    ]
+
+---
+If:
+    PathMatch: .*\.(h|hpp)
+CompileFlags:
+    Remove: ["-x*"]
+    Add: ["-xhip"]
