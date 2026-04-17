@@ -22,10 +22,9 @@ __device__ __forceinline__ T dpp_row_scan(T val, Op op) {
     return val;
 }
 
-// Wavefront-wide inclusive scan using Data Parallel Primitives, result is in
-// lane 63 Note that for correct inclusive scan output some banks/rows would
-// need to be masked out, but this prevents LLVM from merging the DPP modifier
-// into the ALU instruction.
+// Wavefront-wide inclusive scan using Data Parallel Primitives, result is in lane 63.
+// Note that for correct inclusive scan output some banks/rows would need to be masked out,
+// but this prevents LLVM from merging the DPP modifier into the ALU instruction.
 template <typename T, typename Op>
 __device__ __forceinline__ T dpp_wave_scan(T val, Op op) {
     val = op(val, dpp<0x111>(val)); // row_shr:1
@@ -42,6 +41,7 @@ template <typename T> __device__ __forceinline__ T dpp_wave_broadcast63(T val) {
     return std::bit_cast<T>(
         __builtin_amdgcn_readlane(std::bit_cast<int>(val), 63));
 }
+
 // Wavefront-wide inclusive sum
 template <typename T> __device__ __forceinline__ T dpp_wave_scan_sum(T val) {
     return dpp_wave_scan(val, std::plus<T>{});

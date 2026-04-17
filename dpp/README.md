@@ -2,23 +2,20 @@
 
 Code examples to supplement the blog post on Data Parallel Primitives (DPP) in HIP.
 
-- `dpp.hpp`contains a simple wrapper around the DPP intrinsics
-- `print_dpp_intermediates.hip.cpp` shows intermediate values of DPP operations for wave reduction to illustrate how they work
-
-This directory uses a minimal CMake setup:
-
-- every `*.hip` / `*.hip.cpp` is built as its own executable
-- each file is expected to have its own `main()`
+- `dpp.hpp` contains a simple wrapper around the DPP intrinsics
+- `print_dpp_intermediates.hip` shows intermediate values of DPP operations for wave reduction to illustrate how they work.
+- `bpermmute.hip` demonstrates the increasing latency of `ds_*` operations when multiple waves are issuing simultaneously.
 
 ## Build
 
 ```bash
 cd dpp
-cmake -S . -B build
-cmake --build build -j
+cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
+cmake --build build -j$(nproc)
 ```
 ## Run
 
 ```bash
 ./build/print_dpp_intermediates
+./build/bpermute_lcy
 ```
